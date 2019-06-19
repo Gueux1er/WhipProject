@@ -1,0 +1,16 @@
+﻿Nom de la variable;Valeur;Commentaire
+workdayPhases_01;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_02;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_03;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_04;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_05;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_06;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPhases_07;Work,Lunch,Work,Sleep;De quelles phases de jeu est composé la journée.
+workdayPaperclip_objective01;1000000;
+workdayPaperclip_objective02;1000000;
+workdayPaperclip_objective03;1000000;
+workdayPaperclip_objective04;1000000;
+workdayPaperclip_objective05;1000000;
+workdayPaperclip_objective06;1000000;
+workdayPaperclip_objective07;1000000;
+robots_amout;5;amount of robots in the game
