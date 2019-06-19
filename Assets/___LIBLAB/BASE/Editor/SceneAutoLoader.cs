@@ -21,7 +21,7 @@ public static class SceneAutoLoader
         sceneAssets = new List<SceneAsset>();
 
         sceneAssets.Add((SceneAsset)AssetDatabase.LoadAssetAtPath("Assets/___LIBLAB/0___ LibLab Init.unity", typeof(SceneAsset)));
-        sceneAssets.Add((SceneAsset)AssetDatabase.LoadAssetAtPath("Assets/NEW GAME/Scenes/NewGameScene.unity", typeof(SceneAsset)));
+        //sceneAssets.Add((SceneAsset)AssetDatabase.LoadAssetAtPath("Assets/NEW GAME/Scenes/NewGameScene.unity", typeof(SceneAsset)));
 
         if (sceneAssets[1] == null) return;
 

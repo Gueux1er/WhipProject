@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9780b2e0948d1f64da127e201b316604, type: 3}
+  m_Name: _LevelValues
+  m_EditorClassIdentifier: 
+  CSVFile: {fileID: 4900000, guid: f702726fdd804084da5176d68ded2e1f, type: 3}
+  boolValues:
+    m_keys:
+    - useDamage
+    m_values: 00
+  floatValues:
+    m_keys:
+    - brokenDuration
+    - damagePerHit
+    - normalProduction
+    - opportunityDuration
+    - opportunityProbability
+    - opportunityRoll
+    - superBoostDuration
+    - superBoostProduction
+    - tiredDuration
+    - tiredProduction
+    - tiredTimerMax
+    - tiredTimerMin
+    m_values:
+    - 3
+    - 4
+    - 2000
+    - 10
+    - 0.05
+    - 5
+    - 8
+    - 5000
+    - 18
+    - 1000
+    - 40
+    - 13
+  stringValues:
+    m_keys: []
+    m_values: []

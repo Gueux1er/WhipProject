@@ -48,11 +48,30 @@ MonoBehaviour:
   settingValues: {fileID: 11400000, guid: 69014f33e4c01ea4b9c3e4e01d46b23c, type: 2}
   toActiveAtStart: []
   toDisableAtStart: []
-  accelerometerValues: {fileID: 11400000, guid: 890c514daf3b62440a37a92a6ae26504,
-    type: 2}
-  whipForceValue: 650
-  _accelerometerValues: 
+  levelValues: {fileID: 11400000, guid: 2f4e1f74a5a320e459898aa0324e319a, type: 2}
+  accelerometerRobots: 
   robotParent: {fileID: 0}
   robotPrefab: {fileID: 4346637987237962534, guid: 3bbf0f49336b53348b6b08b0209e26be,
     type: 3}
+  robotNames:
+  - LUD0V1C
+  - CYR1LL3
+  - CL3M3NT
+  - V1CT0R
+  - FL0R14N
   robots: []
+  productionText: {fileID: 0}
+  production: 0
+  lineRenderer: {fileID: 0}
+  lineSize: 0
+  spacePoint: 0
+  maxPointScore: 0
+  minPointScore: 0
+  debugDisplay: {fileID: 0}
+  accelerometerWhipInputFields:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

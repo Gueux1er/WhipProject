@@ -50,6 +50,8 @@ namespace LibLabGames.WhipProject
                 if (v != null) v.SetActive(false);
             }
 
+            settingValues.UpdateValuesByCSV(false);
+
             return true;
         }
 

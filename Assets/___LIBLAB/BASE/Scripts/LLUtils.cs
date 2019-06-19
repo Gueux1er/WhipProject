@@ -96,6 +96,17 @@ public static class LLUtils
         return t.GetChild(t.childCount - 1);
     }
 
+    public static int GetMyIndexChild(this Transform t)
+    {
+        for (int i = 0; i < t.parent.childCount; ++i)
+        {
+            if (t == t.parent.GetChild(i))
+                return i;
+        }
+
+        return 0;
+    }
+
     public static void DetachAllChild(this Transform t, Transform newParent = null, bool worldPositionStays = true)
     {
         for (int i = t.childCount - 1; i > -1; --i)

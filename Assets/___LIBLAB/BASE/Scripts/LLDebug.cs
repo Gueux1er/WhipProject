@@ -6,12 +6,14 @@ namespace LibLabSystem
 {
     public class LLDebug : MonoBehaviour
     {
+        public static LLDebug instance;
+
         public bool DEBUG_KEY_ACTIVE;
 
         public KeyCode DebugRestartScene;
         public KeyCode DebugDisplayKey;
 
-        private bool DEBUG_DISPLAY;
+        [HideInInspector] public bool DEBUG_DISPLAY;
 
         private GUIStyle debugDisplayStyle;
         private Texture2D debugBackground;
@@ -24,6 +26,8 @@ namespace LibLabSystem
 
         private void Awake()
         {
+            instance = this;
+
             if (!Debug.isDebugBuild)
             {
                 DEBUG_KEY_ACTIVE = false;

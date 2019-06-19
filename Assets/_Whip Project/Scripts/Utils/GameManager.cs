@@ -6,6 +6,7 @@ using System.Linq;
 using LibLabSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace LibLabGames.WhipProject
 {
@@ -13,13 +14,25 @@ namespace LibLabGames.WhipProject
     {
         public static GameManager instance;
 
+        public SettingValues levelValues;
+
         SerialPort serialPort;
         string[] stringDelimiters = new string[] { ":" };
         public int[] accelerometerRobots;
 
         public Transform robotParent;
         public GameObject robotPrefab;
+        public List<string> robotNames;
         public List<Robot> robots;
+        
+        public TextMeshProUGUI productionText;
+        public float production;
+
+        public LineRenderer lineRenderer;
+        public int lineSize;
+        public float spacePoint;
+        public float maxPointScore;
+        public float minPointScore;
 
         public GameObject debugDisplay;
         public List<InputField> accelerometerWhipInputFields;
@@ -36,9 +49,9 @@ namespace LibLabGames.WhipProject
 
             instance = this;
 
-            settingValues.UpdateValuesByCSV(false);
-
             debugDisplay.SetActive(false);
+
+            levelValues.UpdateValuesByCSV(false);
         }
 
         private void Start()
@@ -48,10 +61,17 @@ namespace LibLabGames.WhipProject
 
             accelerometerRobots = new int[(int) settingValues.GetFloatValue("robots_amout")];
 
+            for (int i = robotParent.childCount - 1; i > -1; --i)
+            {
+                Destroy(robotParent.GetChild(i).gameObject);
+            }
+
             robots = new List<Robot>();
             for (int i = 0; i < accelerometerRobots.Length; ++i)
             {
                 robots.Add(Instantiate(robotPrefab, robotParent).GetComponent<Robot>());
+                robots[i].robotName = robotNames[i];
+                robots[i].robotIndex = i;
             }
 
             for (int i = 0; i < accelerometerWhipInputFields.Count; ++i)
@@ -70,6 +90,12 @@ namespace LibLabGames.WhipProject
 
         private void FixedUpdate()
         {
+            for (int i = 0; i < robots.Count; ++i)
+            {
+                production += robots[i].production * Time.deltaTime;
+            }
+            productionText.text = String.Format("{0:#,###0}", production);
+
             string cmd = CheckForRecievedData();
             if (cmd.StartsWith("W"))
             {
@@ -86,9 +112,34 @@ namespace LibLabGames.WhipProject
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (LLDebug.instance.DEBUG_DISPLAY)
             {
-                debugDisplay.SetActive(!debugDisplay.activeInHierarchy);
+                debugDisplay.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.Keypad0))
+                {
+                    robots[0].Whipped();
+                }
+                if (Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    robots[1].Whipped();
+                }
+                if (Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    robots[2].Whipped();
+                }
+                if (Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    robots[3].Whipped();
+                }
+                if (Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    robots[4].Whipped();
+                }
+            }
+            else
+            {
+                debugDisplay.SetActive(false);
             }
         }
 

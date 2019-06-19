@@ -75,7 +75,7 @@ namespace LibLabGames.WhipProject
                 if (fileGrid[i, 0] == null || fileGrid[i, 0] == "")
                     return;
 
-                if (fileGrid[i, 1].Split(',').Length > 1)
+                if (fileGrid[i, 1].Split(',').Length > 2)
                 {
                     stringValues.Add(fileGrid[i, 0], fileGrid[i, 1]);
                 }

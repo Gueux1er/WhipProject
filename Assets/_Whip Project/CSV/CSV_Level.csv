@@ -1,0 +1,14 @@
+﻿Nom de la variable;Valeur;Commentaire
+brokenDuration;3;Durée de l'état Broken
+damagePerHit;4;
+normalProduction;2000;Production normale
+opportunityDuration;10;Durée de l'opportunité
+opportunityProbability;0,05;Chance de déclencher l'état Productivity Opportunity
+opportunityRoll;5;Timer entre les jets de dés pour Productive Opportunity
+superBoostDuration;8;Durée de l'état SuperBoost
+superBoostProduction;5000;Production en SuperBoost
+tiredDuration;18;Durée de l'état fatigué
+tiredProduction;1000;Production quand fatigué
+tiredTimerMax;40;Temps max avant la fatigue
+tiredTimerMin;13;Temps min avant la fatigue
+useDamage;FALSE;
