@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{d9467116-a98b-4836-915a-e69741df406e}">
+        <property name="assetPath">
+            <value>MACHINE_Industrial_Fan_Start_Medium_01_sterero.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>8.722471655328798</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2b4fe14b-a6fa-4577-b106-d641d8433093}</destination>
+        </relationship>
+    </object>
+</objects>

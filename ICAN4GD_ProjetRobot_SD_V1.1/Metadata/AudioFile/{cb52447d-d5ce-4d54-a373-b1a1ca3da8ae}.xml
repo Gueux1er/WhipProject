@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{cb52447d-d5ce-4d54-a373-b1a1ca3da8ae}">
+        <property name="assetPath">
+            <value>APPLIANCE_Fridge_Hum_05_Interior_Fridge_loop_mono.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>1</value>
+        </property>
+        <property name="length">
+            <value>3.9495238095238094</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2b4fe14b-a6fa-4577-b106-d641d8433093}</destination>
+        </relationship>
+    </object>
+</objects>

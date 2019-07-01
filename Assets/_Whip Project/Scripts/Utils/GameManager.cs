@@ -16,26 +16,27 @@ namespace LibLabGames.WhipProject
 
         public SettingValues levelValues;
 
-        SerialPort serialPort;
+        public SerialPort serialPort1;
+        public SerialPort serialPort2;
         string[] stringDelimiters = new string[] { ":" };
         public int[] accelerometerRobots;
 
-        public Transform robotParent;
-        public GameObject robotPrefab;
-        public List<string> robotNames;
         public List<Robot> robots;
         
         public TextMeshProUGUI productionText;
         public float production;
 
         public LineRenderer lineRenderer;
-        public int lineSize;
-        public float spacePoint;
-        public float maxPointScore;
-        public float minPointScore;
+        // public int lineSize;
+        // public float spacePoint;
+        // public float maxPointScore;
+        // public float minPointScore;
 
         public GameObject debugDisplay;
         public List<InputField> accelerometerWhipInputFields;
+
+        public static FMOD.Studio.EventInstance fmodEvent_StartGame;
+        public static FMOD.Studio.EventInstance fmodEvent_Programm;
 
         public override void GetSettingGameValues()
         {
@@ -52,6 +53,11 @@ namespace LibLabGames.WhipProject
             debugDisplay.SetActive(false);
 
             levelValues.UpdateValuesByCSV(false);
+
+            fmodEvent_StartGame = FMODUnity.RuntimeManager.CreateInstance("event:/Systeme/Jingle_Annonce_DébutJeu");
+            fmodEvent_StartGame.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
+            fmodEvent_StartGame = FMODUnity.RuntimeManager.CreateInstance("event:/Systeme/Jingle_Annonce_Programme");
+            fmodEvent_StartGame.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
         }
 
         private void Start()
@@ -61,31 +67,24 @@ namespace LibLabGames.WhipProject
 
             accelerometerRobots = new int[(int) settingValues.GetFloatValue("robots_amout")];
 
-            for (int i = robotParent.childCount - 1; i > -1; --i)
-            {
-                Destroy(robotParent.GetChild(i).gameObject);
-            }
-
-            robots = new List<Robot>();
-            for (int i = 0; i < accelerometerRobots.Length; ++i)
-            {
-                robots.Add(Instantiate(robotPrefab, robotParent).GetComponent<Robot>());
-                robots[i].robotName = robotNames[i];
-                robots[i].robotIndex = i;
-            }
-
             for (int i = 0; i < accelerometerWhipInputFields.Count; ++i)
             {
                 accelerometerWhipInputFields[i].gameObject.SetActive(i < accelerometerRobots.Length);
             }
 
-            string[] portNames = SerialPort.GetPortNames();
-            serialPort = new SerialPort(portNames[0], 9600, Parity.None, 8, StopBits.One);
+            serialPort1 = new SerialPort("COM8", 9600, Parity.None, 8, StopBits.One);
 
-            serialPort.DtrEnable = false;
-            serialPort.ReadTimeout = 1;
-            serialPort.WriteTimeout = 1;
-            serialPort.Open();
+            serialPort1.DtrEnable = false;
+            serialPort1.ReadTimeout = 1;
+            serialPort1.WriteTimeout = 1;
+            serialPort1.Open();
+
+            serialPort2 = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
+
+            serialPort2.DtrEnable = false;
+            serialPort2.ReadTimeout = 1;
+            serialPort2.WriteTimeout = 1;
+            serialPort2.Open();
         }
 
         private void FixedUpdate()
@@ -147,9 +146,9 @@ namespace LibLabGames.WhipProject
         {
             try
             {
-                string inData = serialPort.ReadLine();
-                serialPort.BaseStream.Flush();
-                serialPort.DiscardInBuffer();
+                string inData = serialPort1.ReadLine();
+                serialPort1.BaseStream.Flush();
+                serialPort1.DiscardInBuffer();
                 return inData;
             }
             catch { return string.Empty; }
@@ -157,20 +156,44 @@ namespace LibLabGames.WhipProject
 
         private void OnApplicationQuit()
         {
-            if (serialPort != null)
-                serialPort.Close();
+            if (serialPort1 != null && serialPort1.IsOpen)
+            {
+                serialPort1.Write("!");
+                serialPort1.Close();
+            }
+            if (serialPort2 != null && serialPort2.IsOpen)
+            {
+                serialPort2.Write("!");
+                serialPort2.Close();
+            }
         }
 
         private void OnDisable()
         {
-            if (serialPort != null)
-                serialPort.Close();
+            if (serialPort1 != null && serialPort1.IsOpen)
+            {
+                serialPort1.Write("!");
+                serialPort1.Close();
+            }
+            if (serialPort2 != null && serialPort2.IsOpen)
+            {
+                serialPort2.Write("!");
+                serialPort2.Close();
+            }
         }
 
         private void OnDestroy()
         {
-            if (serialPort != null)
-                serialPort.Close();
+            if (serialPort1 != null && serialPort1.IsOpen)
+            {
+                serialPort1.Write("!");
+                serialPort1.Close();
+            }
+            if (serialPort2 != null && serialPort2.IsOpen)
+            {
+                serialPort2.Write("!");
+                serialPort2.Close();
+            }
         }
     }
 }

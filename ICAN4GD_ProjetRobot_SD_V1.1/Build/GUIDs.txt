@@ -1,0 +1,25 @@
+{3a3dd331-468c-465c-9091-3b028bdaaf02} event:/Action joueur/Allumer_Bouton
+{a46b1740-1aba-42b3-9cc8-45ce9008eb96} event:/Action joueur/Brancher_Cable_Alimenté
+{edd0ac71-3ddf-418e-b99c-e191fb4e4ed1} event:/Action joueur/Brancher_Cable_NnAlimenté
+{429426fc-1358-4be8-89bd-d94a528d7f75} event:/Action joueur/Chute_Cable
+{eb56058a-e276-42f5-8e0e-b49c52479537} event:/Action joueur/Débrancher_Cable_Alimenté
+{c0927fd1-d8e3-42f4-96d0-a0c4b7ff5168} event:/Action joueur/Débrancher_Cable_NnAlimenté
+{a5be38aa-b5b6-49cb-b387-667a683158b9} event:/Action joueur/Récupérer_Cable
+{df0845ab-5226-46c3-b46d-21a40111af25} event:/Action joueur/Tirer_Cable
+{77bcedcb-d73d-42dc-97f0-28cb32682d09} event:/Réaction système/Allumage_Ecran
+{648236bb-a156-4473-aca8-1da8fa1b70c7} event:/Réaction système/Ecran_Allumé
+{11d67dc1-7412-4022-9b5f-563fc8aedaa5} event:/Réaction système/Eteignage_Ecran
+{8b6c4fa8-694e-46d5-a448-dfefeab8568f} event:/Réaction système/Générateur_Allumage
+{23d96820-5ff9-40c9-8ee9-c2f83659e066} event:/Réaction système/Générateur_Eteignage
+{65dd7e33-85ba-4d75-a49a-ac6fce48eecc} event:/Réaction système/Machine_Allumage
+{631ba00f-ce36-4014-bc6e-c03aa5709824} event:/Réaction système/Machine_Eteignage
+{be975699-5ec6-49c4-a0da-2af167f4008c} event:/Réaction système/Machine_Marche
+{32c13170-1c5d-453d-bd70-3d4f4ddf909f} event:/Autre bruits d'ambiances/Bip1
+{01baf9e6-877c-4367-8502-d11a9b620917} event:/Autre bruits d'ambiances/Bip2
+{cb9ed947-b30c-44d4-b2ce-d0c8cc5a3a91} event:/Autre bruits d'ambiances/Bip3
+{7a153e65-e7dc-462a-94ab-535778ab84bd} event:/Autre bruits d'ambiances/Bip4
+{60c3d5be-a735-45f1-ad42-c7e37b3d2957} event:/Autre bruits d'ambiances/BuzzEléctrique
+{4c69a42c-a1f7-429e-b96d-e5fedaf3e050} event:/Musique d'ambiance/Ambiance_Générateur
+{9c98e37f-c308-4438-a521-b8e457165a22} bus:/
+{55af03f5-c655-45c6-9f49-067c5799af0c} bus:/Reverb
+{671e13dd-1701-40e4-b371-1cb6547a8a12} bank:/Master Bank

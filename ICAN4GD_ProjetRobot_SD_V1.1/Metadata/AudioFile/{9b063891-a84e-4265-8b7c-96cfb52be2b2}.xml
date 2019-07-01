@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{9b063891-a84e-4265-8b7c-96cfb52be2b2}">
+        <property name="assetPath">
+            <value>1961_Balayer.mp3</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>5.6879999999999997</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2b4fe14b-a6fa-4577-b106-d641d8433093}</destination>
+        </relationship>
+    </object>
+</objects>

@@ -820,6 +820,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388058948}
   m_CullTransparentMesh: 0
+--- !u!114 &390765369 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+    type: 3}
+  m_PrefabInstance: {fileID: 2070650477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &440110085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1247,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotName
+      value: CYR1LL3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf0f49336b53348b6b08b0209e26be, type: 3}
@@ -1992,6 +2014,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotName
+      value: CL3M3NT
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf0f49336b53348b6b08b0209e26be, type: 3}
 --- !u!1 &712782049
@@ -2236,6 +2268,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotName
+      value: FL0R1AN
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf0f49336b53348b6b08b0209e26be, type: 3}
 --- !u!224 &805740031 stripped
@@ -2323,6 +2365,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810583499}
   m_CullTransparentMesh: 0
+--- !u!114 &813966942 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+    type: 3}
+  m_PrefabInstance: {fileID: 804870091}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &814769798
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,14 +2631,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &855194115
-AudioListener:
+--- !u!114 &855194115
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855194114}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: 0
 --- !u!20 &855194116
 Camera:
   m_ObjectHideFlags: 0
@@ -3000,6 +3059,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotName
+      value: V1CT0R
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf0f49336b53348b6b08b0209e26be, type: 3}
@@ -3424,6 +3493,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151929628}
   m_CullTransparentMesh: 0
+--- !u!114 &1174513047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+    type: 3}
+  m_PrefabInstance: {fileID: 491975806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1241646341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,6 +3754,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &1310375653 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+    type: 3}
+  m_PrefabInstance: {fileID: 701965603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1335126186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4542,6 +4635,18 @@ MonoBehaviour:
   currentValueText: {fileID: 52557456}
   inputField: {fileID: 1755850596}
   m_acceleroValue: 1
+--- !u!114 &1779174565 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+    type: 3}
+  m_PrefabInstance: {fileID: 971042520}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1814329884
 GameObject:
   m_ObjectHideFlags: 0
@@ -5861,6 +5966,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7409324289266748620, guid: 3bbf0f49336b53348b6b08b0209e26be,
+        type: 3}
+      propertyPath: robotName
+      value: LUD0V1C
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf0f49336b53348b6b08b0209e26be, type: 3}
 --- !u!1 &2073616112
@@ -6281,6 +6391,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
         type: 3}
+      propertyPath: robots.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
       propertyPath: robotParent
       value: 
       objectReference: {fileID: 189459389}
@@ -6329,6 +6444,31 @@ PrefabInstance:
       propertyPath: accelerometerWhipInputFields.Array.data[5]
       value: 
       objectReference: {fileID: 1821099387}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
+      propertyPath: robots.Array.data[0]
+      value: 
+      objectReference: {fileID: 390765369}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
+      propertyPath: robots.Array.data[1]
+      value: 
+      objectReference: {fileID: 1174513047}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
+      propertyPath: robots.Array.data[2]
+      value: 
+      objectReference: {fileID: 1779174565}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
+      propertyPath: robots.Array.data[3]
+      value: 
+      objectReference: {fileID: 813966942}
+    - target: {fileID: 1242755401608364675, guid: eec4ba884a7403f4484acbc0e92d1a4a,
+        type: 3}
+      propertyPath: robots.Array.data[4]
+      value: 
+      objectReference: {fileID: 1310375653}
     - target: {fileID: 7764163116049422433, guid: eec4ba884a7403f4484acbc0e92d1a4a,
         type: 3}
       propertyPath: m_LocalPosition.x

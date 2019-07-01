@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{ee8ca364-550e-49ce-956e-234e2d3ecc7d}">
+        <property name="assetPath">
+            <value>11179_RechercheOnde.mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>49.488</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2b4fe14b-a6fa-4577-b106-d641d8433093}</destination>
+        </relationship>
+    </object>
+</objects>

@@ -328,14 +328,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventEmitter: {fileID: 0}
+  events:
+  - tag: AWAKE_START
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Normal_Allumage_Robot
+  - tag: AWAKE_ON
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Normal_Marche_Robot
+  - tag: AWAKE_END
+    eventPath: "event:/RobotTravail_SD/RobotTravail_{0}/Normal_D\xE9sactivation_Robot"
+  - tag: PRODUCTIVITY
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Boost_Dispo
+  - tag: BOOST_START
+    eventPath: "event:/RobotTravail_SD/RobotTravail_{0}/Boost_D\xE9but_Robot"
+  - tag: BOOST_END
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Boost_Fin_Robot
+  - tag: BROKEN_START
+    eventPath: "event:/RobotTravail_SD/RobotTravail_{0}/Down_D\xE9but_Robot"
+  - tag: BROKEN_END
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Down_Fin_Robot
+  - tag: WHIPPED
+    eventPath: "event:/RobotTravail_SD/RobotTravail_{0}/Alarme_D\xE9gat"
+  - tag: DESTRUCTION_0
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Destruction_Partie_Robot
+  - tag: DESTRUCTION_1
+    eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Destruction_Totale_Robot
+  - tag: SWISH
+    eventPath: "event:/RobotTravail_SD/RobotTravail_{0}/Gr\xE9sillement_Electrique_D\xE9g\xE2t"
   robotName: 
   robotIndex: 0
-  baseLife: 100
-  speedLowLife: 5
-  addLifeWhip:
-  - 50
-  - 100
-  currentLife: 0
+  production: 0
   image: {fileID: 6656854764200430548}
   nameText: {fileID: 1226971101986665328}
   separatorImage: {fileID: 2970316461800226079}
