@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using LibLabSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using DG.Tweening;
 
 namespace LibLabGames.WhipProject
 {
@@ -22,9 +24,16 @@ namespace LibLabGames.WhipProject
         public int[] accelerometerRobots;
 
         public List<Robot> robots;
-        
+
         public TextMeshProUGUI productionText;
         public float production;
+        public TextMeshProUGUI perSecondText;
+        public float perSecond;
+
+        public Image productiveCirclePart;
+        public Image superboostCirclePart;
+        public Image tiredCirclePart;
+        public Image unproductiveCirclePart;
 
         public LineRenderer lineRenderer;
         // public int lineSize;
@@ -58,12 +67,25 @@ namespace LibLabGames.WhipProject
             fmodEvent_StartGame.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
             fmodEvent_StartGame = FMODUnity.RuntimeManager.CreateInstance("event:/Systeme/Jingle_Annonce_Programme");
             fmodEvent_StartGame.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
+
+            productionText.text = "0";
         }
 
+        private string[] portNames;
+        [HideInInspector] public bool portFound;
         private void Start()
         {
             // DOStart can be place as you wish
             base.DOStart();
+
+            portNames = SerialPort.GetPortNames();
+
+            foreach (var p in portNames)
+            {
+                if (p == "COM8")
+                    portFound = true;
+            }
+            print (string.Format("FIND PORT : {0}", portFound));
 
             accelerometerRobots = new int[(int) settingValues.GetFloatValue("robots_amout")];
 
@@ -72,41 +94,71 @@ namespace LibLabGames.WhipProject
                 accelerometerWhipInputFields[i].gameObject.SetActive(i < accelerometerRobots.Length);
             }
 
-            serialPort1 = new SerialPort("COM8", 9600, Parity.None, 8, StopBits.One);
+            unproductiveCirclePart.fillAmount = 0;
+            unproductiveCirclePart.DOFillAmount(1,1).SetEase(Ease.Linear).SetDelay(0.5f);
+            
+            StartCoroutine(COUpdateProductiveCirclePart());
+            StartCoroutine(COUpdateBoostCirclePart());
+            StartCoroutine(COUpdateTiredCirclePart());
+
+            if (!portFound)
+                return;
+
+            serialPort1 = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
 
             serialPort1.DtrEnable = false;
-            serialPort1.ReadTimeout = 1;
-            serialPort1.WriteTimeout = 1;
+            serialPort1.ReadTimeout = 10;
+            serialPort1.WriteTimeout = 10;
             serialPort1.Open();
 
-            serialPort2 = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
+            serialPort2 = new SerialPort("COM8", 9600, Parity.None, 8, StopBits.One);
 
             serialPort2.DtrEnable = false;
-            serialPort2.ReadTimeout = 1;
-            serialPort2.WriteTimeout = 1;
+            serialPort2.ReadTimeout = 10;
+            serialPort2.WriteTimeout = 10;
             serialPort2.Open();
         }
 
         private void FixedUpdate()
         {
+            if (Time.frameCount % 2 == 0)
+            {
+                UpdateCircleChart();
+            }
+
+            perSecond = 0;
             for (int i = 0; i < robots.Count; ++i)
             {
                 production += robots[i].production * Time.deltaTime;
+                perSecond += robots[i].production;
             }
-            productionText.text = String.Format("{0:#,###0}", production);
+            if (production > 0)
+                productionText.text = production.ToString("##,#", CultureInfo.CreateSpecificCulture("en-US"));
+            else
+                productionText.text = "0";
 
-            string cmd = CheckForRecievedData();
-            if (cmd.StartsWith("W"))
+
+            if (perSecond > 0)
+                perSecondText.text = "<size=50>+" + perSecond.ToString("##,#", CultureInfo.CreateSpecificCulture("en-US")) + "</size> per second";
+            else
+                perSecondText.text = "+0 per second";
+
+
+            if (portFound)
             {
-                cmd = cmd.Remove(0, 2);
-                for (int i = 0; i < accelerometerRobots.Length; ++i)
+                string cmd = CheckForRecievedData();
+                if (cmd.StartsWith("W"))
                 {
-                    accelerometerRobots[i] = int.Parse(cmd.Split('|')[i]);
-
-                    if (accelerometerRobots[i] > PlayerPrefs.GetInt(string.Format("acceleroValue{0}", i)))
+                    cmd = cmd.Remove(0, 2);
+                    for (int i = 0; i < accelerometerRobots.Length; ++i)
                     {
-                        LLLog.Log("GameManager", string.Format("Robot <color=green>#{0}</color> was whipped with <color=red>{1}</color> force point.", i, accelerometerRobots[i]));
-                        robots[i].Whipped();
+                        accelerometerRobots[i] = int.Parse(cmd.Split('|') [i]);
+
+                        if (accelerometerRobots[i] > PlayerPrefs.GetInt(string.Format("acceleroValue{0}", i)))
+                        {
+                            LLLog.Log("GameManager", string.Format("Robot <color=green>#{0}</color> was whipped with <color=red>{1}</color> force point.", i, accelerometerRobots[i]));
+                            robots[i].Whipped();
+                        }
                     }
                 }
             }
@@ -152,6 +204,113 @@ namespace LibLabGames.WhipProject
                 return inData;
             }
             catch { return string.Empty; }
+        }
+
+        private float prodCount;
+        private float boostCount;
+        private float tiredCount;
+        public void UpdateCircleChart()
+        {
+            prodCount = 0;
+            boostCount = 0;
+            tiredCount = 0;
+
+            for (int i = 0; i < robots.Count; ++i)
+            {
+                switch (robots[i].currentState)
+                {
+                case Robot.eState.Awake:
+                case Robot.eState.Productivity:
+                    prodCount++;
+                    break;
+
+                case Robot.eState.Boost:
+                    boostCount++;
+                    break;
+
+                case Robot.eState.Tired:
+                    tiredCount++;
+                    break;
+                }
+            }
+
+            boostCount += prodCount;
+            tiredCount += boostCount;
+        }
+        
+        private float lastProdCount;
+        private float prodStartTime;
+        private float prodEvaluate;
+        private IEnumerator COUpdateProductiveCirclePart()
+        {
+            while (true)
+            {
+                prodEvaluate = 0;
+                lastProdCount = prodCount;
+
+                while (lastProdCount == prodCount)
+                    yield return null;
+
+                prodStartTime = Time.time;
+                while(Time.time - prodStartTime < 1)
+                {
+                    prodEvaluate += Time.deltaTime;
+
+                    productiveCirclePart.fillAmount = Mathf.Lerp(lastProdCount * 2 / 10, prodCount * 2 / 10, prodEvaluate);
+
+                    yield return null;
+                }
+            }
+        }
+
+        private float lastBoostCount;
+        private float boostStartTime;
+        private float boostEvaluate;
+        private IEnumerator COUpdateBoostCirclePart()
+        {
+            while (true)
+            {
+                boostEvaluate = 0;
+                lastBoostCount = boostCount;
+
+                while (lastBoostCount == boostCount)
+                    yield return null;
+
+                boostStartTime = Time.time;
+                while(Time.time - boostStartTime < 1)
+                {
+                    boostEvaluate += Time.deltaTime;
+
+                    superboostCirclePart.fillAmount = Mathf.Lerp(lastBoostCount * 2 / 10, boostCount * 2 / 10, boostEvaluate);
+
+                    yield return null;
+                }
+            }
+        }
+
+        private float lastTiredCount;
+        private float tiredStartTime;
+        private float tiredEvaluate;
+        private IEnumerator COUpdateTiredCirclePart()
+        {
+            while (true)
+            {
+                tiredEvaluate = 0;
+                lastTiredCount = tiredCount;
+
+                while (lastTiredCount == tiredCount)
+                    yield return null;
+
+                tiredStartTime = Time.time;
+                while(Time.time - tiredStartTime < 1)
+                {
+                    tiredEvaluate += Time.deltaTime;
+
+                    tiredCirclePart.fillAmount = Mathf.Lerp(lastTiredCount * 2 / 10, tiredCount * 2 / 10, tiredEvaluate);
+
+                    yield return null;
+                }
+            }
         }
 
         private void OnApplicationQuit()

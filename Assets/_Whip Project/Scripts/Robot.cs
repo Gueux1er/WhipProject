@@ -31,12 +31,12 @@ namespace LibLabGames.WhipProject
 
         public enum eState { Awake, Productivity, Boost, Tired, Broken, Asleep };
 
-        [System.Serializable]
-        public struct RobotState
-        {
-            public eState state;
-            public Color color;
-            public Sprite sprite;
+ [System.Serializable]
+ public struct RobotState
+ {
+ public eState state;
+ public Color color;
+ public Sprite sprite;
         }
         public List<RobotState> robotStates;
         public eState currentState;
@@ -52,19 +52,22 @@ namespace LibLabGames.WhipProject
             yield return null;
             yield return null;
 
-            while (!GameManager.instance.serialPort1.IsOpen || !GameManager.instance.serialPort2.IsOpen)
+            if (GameManager.instance.portFound)
             {
-                print(string.Format("SerialPort 1 : {0}, SerialPort 2 : {1} ", GameManager.instance.serialPort1.IsOpen, GameManager.instance.serialPort2.IsOpen));
-                yield return null;
+                while (!GameManager.instance.serialPort1.IsOpen || !GameManager.instance.serialPort2.IsOpen)
+                {
+                    print(string.Format("SerialPort 1 : {0}, SerialPort 2 : {1} ", GameManager.instance.serialPort1.IsOpen, GameManager.instance.serialPort2.IsOpen));
+                    yield return null;
+                }
+
+                // Avoid timeOut;
+                if (robotIndex != 0)
+                    GameManager.instance.serialPort1.Write("AWA_" + robotIndex);
+                else
+                    GameManager.instance.serialPort2.Write("1");
             }
 
             FmodSoundEvent("AWAKE_START");
-
-            // Avoid timeOut;
-            if (robotIndex != 0)
-                GameManager.instance.serialPort1.Write("AWA_" + robotIndex);
-            else
-                GameManager.instance.serialPort2.Write("1");
 
             yield return null;
 
@@ -111,23 +114,27 @@ namespace LibLabGames.WhipProject
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("opportunityRoll"), GameManager.instance.levelValues.GetFloatValue("opportunityProbability"), eState.Productivity);
                 TiredStateCoroutine = COTiredState(GameManager.instance.levelValues.GetFloatValue("tiredTimerMin"), GameManager.instance.levelValues.GetFloatValue("tiredTimerMax"));
                 StartCoroutine(TiredStateCoroutine);
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("0");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("a");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("A");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("b");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("B");
-                    break;
+                        break;
+                    }
                 }
                 break;
 
@@ -135,23 +142,27 @@ namespace LibLabGames.WhipProject
                 FmodSoundEvent("PRODUCTIVITY");
                 production = GameManager.instance.levelValues.GetFloatValue("normalProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("opportunityDuration"), 1, eState.Awake);
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("1");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("c");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("C");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("d");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("D");
-                    break;
+                        break;
+                    }
                 }
                 break;
 
@@ -160,46 +171,54 @@ namespace LibLabGames.WhipProject
                 production = GameManager.instance.levelValues.GetFloatValue("superBoostProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("superBoostDuration"), 1, eState.Awake);
                 image.transform.DOMoveY(5, 0.2f).SetRelative().SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("2");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("e");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("E");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("f");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("F");
-                    break;
+                        break;
+                    }
                 }
                 break;
 
             case eState.Tired:
                 production = GameManager.instance.levelValues.GetFloatValue("tiredProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("tiredDuration"), 1, eState.Broken);
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("3");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("g");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("G");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("h");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("H");
-                    break;
+                        break;
+                    }
                 }
                 break;
 
@@ -208,45 +227,53 @@ namespace LibLabGames.WhipProject
                 production = 0;
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("brokenDuration"), 1, eState.Asleep);
                 image.DOColor(Color.black, 0.5f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("4");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("i");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("I");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("j");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("J");
-                    break;
+                        break;
+                    }
                 }
                 break;
 
             case eState.Asleep:
                 production = 0;
-                switch (robotIndex)
+
+                if (GameManager.instance.portFound)
                 {
+                    switch (robotIndex)
+                    {
                     case 0:
                         GameManager.instance.serialPort2.Write("5");
-                    break;
+                        break;
                     case 1:
                         GameManager.instance.serialPort1.Write("k");
-                    break;
+                        break;
                     case 2:
                         GameManager.instance.serialPort1.Write("K");
-                    break;
+                        break;
                     case 3:
                         GameManager.instance.serialPort1.Write("l");
-                    break;
+                        break;
                     case 4:
                         GameManager.instance.serialPort1.Write("L");
-                    break;
+                        break;
+                    }
                 }
                 break;
             }
@@ -331,19 +358,19 @@ namespace LibLabGames.WhipProject
         private void FmodSoundEvent(string tag)
         {
             path = string.Empty;
-            foreach(var e in events)
+            foreach (var e in events)
             {
-                if(tag == e.tag)
+                if (tag == e.tag)
                 {
                     path = e.eventPath;
-                } 
+                }
             }
             if (path == string.Empty)
             {
                 LLLog.LogE("Robot", string.Format("Event Tag [{0}] not found", tag));
                 return;
             }
-            
+
             fmodEvent = FMODUnity.RuntimeManager.CreateInstance(string.Format(path, robotIndex));
             fmodEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(robotPosition));
             fmodEvent.start();
