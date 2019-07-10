@@ -12,6 +12,8 @@ namespace LibLabGames.WhipProject
     {
         public static FMOD.Studio.EventInstance fmodEvent;
         public static FMOD.Studio.EventInstance fmodEvent_Whipped;
+        public static FMOD.Studio.EventInstance fmodEvent_Voice;
+
         [System.Serializable]
         public struct EventFMOD
         {
@@ -19,7 +21,6 @@ namespace LibLabGames.WhipProject
             public string eventPath;
         }
         public List<EventFMOD> events;
-        public Vector3 robotPosition;
 
         public string robotName;
         public int robotIndex;
@@ -41,6 +42,16 @@ namespace LibLabGames.WhipProject
         public List<RobotState> robotStates;
         public eState currentState;
 
+        public List<string> startPathVoices;
+        public List<string> normalPathVoices;
+        public List<string> productivityPathVoices;
+        public List<string> boostPathVoices;
+        public List<string> tiredPathVoices;
+        public List<string> tiredToBorkenPathVoices;
+        public List<string> whippedBrokenPathVoices;
+        public List<string> whippedOnBoostPathVoices;
+        public List<string> brokenToAwakePathVoices;
+
         IEnumerator Start()
         {
             nameText.text = string.Format("00{0} _{1}", robotIndex, robotName);
@@ -48,9 +59,8 @@ namespace LibLabGames.WhipProject
             if (robotIndex == 0)
                 separatorImage.gameObject.SetActive(false);
 
-            yield return null;
-            yield return null;
-            yield return null;
+            while (!GameManager.instance.gameHasStarted)
+                yield return null;
 
             if (GameManager.instance.portFound)
             {
@@ -69,9 +79,45 @@ namespace LibLabGames.WhipProject
 
             FmodSoundEvent("AWAKE_START");
 
+            if (robotIndex == 0)
+                PlayVoiceFmodSoundEvent(startPathVoices[0]);
+            else if (robotIndex == 2)
+            {
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    PlayVoiceFmodSoundEvent(startPathVoices[1]);
+                });
+            }
+            else if (robotIndex == 4)
+            {
+                DOVirtual.DelayedCall(2.2f, () =>
+                {
+                    PlayVoiceFmodSoundEvent(startPathVoices[2]);
+                });
+            }
+
             yield return null;
 
             ChangeVisualState(currentState, false);
+
+            DOVirtual.DelayedCall(3f, () =>
+            {
+                StartCoroutine(RandomNormalVoices());
+            });
+        }
+
+        private IEnumerator RandomNormalVoices()
+        {
+            while (true)
+            {
+                while (currentState != eState.Awake)
+                    yield return null;
+
+                yield return new WaitForSeconds(Random.Range(6f, 30f));
+
+                if (currentState == eState.Awake)
+                    PlayVoiceFmodSoundEvent(normalPathVoices);
+            }
         }
 
         [ContextMenu("Manual Change Visual State")]
@@ -80,6 +126,7 @@ namespace LibLabGames.WhipProject
             ChangeVisualState(currentState);
         }
 
+        private eState lastState;
         public void ChangeVisualState(eState state, bool log = true)
         {
             if (ChangeStateCoroutine != null)
@@ -139,6 +186,7 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Productivity:
+                PlayVoiceFmodSoundEvent(productivityPathVoices);
                 FmodSoundEvent("PRODUCTIVITY");
                 production = GameManager.instance.levelValues.GetFloatValue("normalProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("opportunityDuration"), 1, eState.Awake);
@@ -167,6 +215,7 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Boost:
+                PlayVoiceFmodSoundEvent(boostPathVoices);
                 FmodSoundEvent("BOOST_START");
                 production = GameManager.instance.levelValues.GetFloatValue("superBoostProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("superBoostDuration"), 1, eState.Awake);
@@ -196,6 +245,7 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Tired:
+                PlayVoiceFmodSoundEvent(tiredPathVoices);
                 production = GameManager.instance.levelValues.GetFloatValue("tiredProduction");
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("tiredDuration"), 1, eState.Broken);
 
@@ -223,6 +273,9 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Broken:
+                if (lastState == eState.Tired)
+                    PlayVoiceFmodSoundEvent(tiredToBorkenPathVoices);
+
                 FmodSoundEvent("BROKEN_START");
                 production = 0;
                 DOChangeStateCoco(GameManager.instance.levelValues.GetFloatValue("brokenDuration"), 1, eState.Asleep);
@@ -278,6 +331,8 @@ namespace LibLabGames.WhipProject
                 break;
             }
 
+            lastState = currentState;
+
             if (log)
                 LLLog.Log("Robot", string.Format("Robot <color=green>#{0}</color> was changed state : <color=blue>{1}</color>.", robotIndex, state));
         }
@@ -289,6 +344,7 @@ namespace LibLabGames.WhipProject
             switch (currentState)
             {
             case eState.Awake:
+                PlayVoiceFmodSoundEvent(whippedBrokenPathVoices);
                 currentState = eState.Broken;
                 ChangeVisualState();
                 break;
@@ -299,6 +355,7 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Boost:
+                PlayVoiceFmodSoundEvent(whippedOnBoostPathVoices);
                 break;
 
             case eState.Tired:
@@ -310,6 +367,7 @@ namespace LibLabGames.WhipProject
                 break;
 
             case eState.Asleep:
+                PlayVoiceFmodSoundEvent(brokenToAwakePathVoices);
                 currentState = eState.Awake;
                 ChangeVisualState();
                 break;
@@ -372,18 +430,32 @@ namespace LibLabGames.WhipProject
             }
 
             fmodEvent = FMODUnity.RuntimeManager.CreateInstance(string.Format(path, robotIndex));
-            fmodEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(robotPosition));
+            fmodEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
             fmodEvent.start();
         }
 
         private void FmodSoundEventWhipped()
         {
-            DOVirtual.DelayedCall(0.3f, () =>
-            {
-                fmodEvent_Whipped = FMODUnity.RuntimeManager.CreateInstance(string.Format("event:/RobotTravail_SD/RobotTravail_{0}/Alarme_Dégat", robotIndex));
-                fmodEvent_Whipped.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(robotPosition));
-                fmodEvent_Whipped.start();
-            });
+            // DOVirtual.DelayedCall(0.3f, () =>
+            // {
+            //     fmodEvent_Whipped = FMODUnity.RuntimeManager.CreateInstance(string.Format("event:/RobotTravail_SD/RobotTravail_{0}/Alarme_Dégat", robotIndex));
+            //     fmodEvent_Whipped.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
+            //     fmodEvent_Whipped.start();
+            // });
+        }
+
+        private void PlayVoiceFmodSoundEvent(string voice)
+        {
+            fmodEvent_Voice = FMODUnity.RuntimeManager.CreateInstance(string.Format(voice, robotIndex));
+            fmodEvent_Voice.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
+            fmodEvent_Voice.start();
+        }
+
+        private void PlayVoiceFmodSoundEvent(List<string> voices)
+        {
+            fmodEvent_Voice = FMODUnity.RuntimeManager.CreateInstance(string.Format(voices[Random.Range(0, voices.Count)], robotIndex));
+            fmodEvent_Voice.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Vector3.zero));
+            fmodEvent_Voice.start();
         }
     }
 }

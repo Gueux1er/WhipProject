@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
+using DG.Tweening;
 using LibLabSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 namespace LibLabGames.WhipProject
 {
@@ -40,6 +40,8 @@ namespace LibLabGames.WhipProject
         // public float spacePoint;
         // public float maxPointScore;
         // public float minPointScore;
+
+        public GameObject titleDisplay;
 
         public GameObject debugDisplay;
         public List<InputField> accelerometerWhipInputFields;
@@ -75,8 +77,7 @@ namespace LibLabGames.WhipProject
         [HideInInspector] public bool portFound;
         private void Start()
         {
-            // DOStart can be place as you wish
-            base.DOStart();
+            //base.DOStart();
 
             portNames = SerialPort.GetPortNames();
 
@@ -85,7 +86,7 @@ namespace LibLabGames.WhipProject
                 if (p == "COM8")
                     portFound = true;
             }
-            print (string.Format("FIND PORT : {0}", portFound));
+            print(string.Format("FIND PORT : {0}", portFound));
 
             accelerometerRobots = new int[(int) settingValues.GetFloatValue("robots_amout")];
 
@@ -94,9 +95,6 @@ namespace LibLabGames.WhipProject
                 accelerometerWhipInputFields[i].gameObject.SetActive(i < accelerometerRobots.Length);
             }
 
-            unproductiveCirclePart.fillAmount = 0;
-            unproductiveCirclePart.DOFillAmount(1,1).SetEase(Ease.Linear).SetDelay(0.5f);
-            
             StartCoroutine(COUpdateProductiveCirclePart());
             StartCoroutine(COUpdateBoostCirclePart());
             StartCoroutine(COUpdateTiredCirclePart());
@@ -121,6 +119,19 @@ namespace LibLabGames.WhipProject
 
         private void FixedUpdate()
         {
+            if (!gameHasStarted)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    base.DOStart();
+                    titleDisplay.SetActive(false);
+
+                    unproductiveCirclePart.fillAmount = 0;
+                    unproductiveCirclePart.DOFillAmount(1, 1).SetEase(Ease.Linear).SetDelay(0.5f);
+                }
+                return;
+            }
+
             if (Time.frameCount % 2 == 0)
             {
                 UpdateCircleChart();
@@ -137,12 +148,10 @@ namespace LibLabGames.WhipProject
             else
                 productionText.text = "0";
 
-
             if (perSecond > 0)
                 perSecondText.text = "<size=50>+" + perSecond.ToString("##,#", CultureInfo.CreateSpecificCulture("en-US")) + "</size> per second";
             else
-                perSecondText.text = "+0 per second";
-
+                perSecondText.text = "<size=50>+0</size> per second";
 
             if (portFound)
             {
@@ -237,7 +246,7 @@ namespace LibLabGames.WhipProject
             boostCount += prodCount;
             tiredCount += boostCount;
         }
-        
+
         private float lastProdCount;
         private float prodStartTime;
         private float prodEvaluate;
@@ -252,7 +261,7 @@ namespace LibLabGames.WhipProject
                     yield return null;
 
                 prodStartTime = Time.time;
-                while(Time.time - prodStartTime < 1)
+                while (Time.time - prodStartTime < 1)
                 {
                     prodEvaluate += Time.deltaTime;
 
@@ -277,7 +286,7 @@ namespace LibLabGames.WhipProject
                     yield return null;
 
                 boostStartTime = Time.time;
-                while(Time.time - boostStartTime < 1)
+                while (Time.time - boostStartTime < 1)
                 {
                     boostEvaluate += Time.deltaTime;
 
@@ -302,7 +311,7 @@ namespace LibLabGames.WhipProject
                     yield return null;
 
                 tiredStartTime = Time.time;
-                while(Time.time - tiredStartTime < 1)
+                while (Time.time - tiredStartTime < 1)
                 {
                     tiredEvaluate += Time.deltaTime;
 

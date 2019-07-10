@@ -328,7 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c29badd9f15644cb42e6ea0caf84cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventEmitter: {fileID: 0}
   events:
   - tag: AWAKE_START
     eventPath: event:/RobotTravail_SD/RobotTravail_{0}/Normal_Allumage_Robot
@@ -386,6 +385,45 @@ MonoBehaviour:
     sprite: {fileID: 5292778164002336967, guid: 3ce7d06875917f74cac622d0adca40f6,
       type: 3}
   currentState: 0
+  startPathVoices:
+  - "event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_D\xE9but_1"
+  - "event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_D\xE9but_2"
+  - "event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_D\xE9but_3"
+  normalPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_2
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_3
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_4
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_5
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Normale_6
+  productivityPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_AnnonceBoost_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_AnnonceBoost_2
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_AnnonceBoost_3
+  boostPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Boost_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Boost_2
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Boost_3
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Boost_4
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Boost_5
+  tiredPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Baisse_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Baisse_2
+  tiredToBorkenPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_TiredtoBlocked_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_TiredtoBlocked_2
+  whippedBrokenPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BrokenError_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BrokenError_2
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BrokenError_3
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BrokenError_4
+  whippedOnBoostPathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Degat_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Degat_2
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_Degat_3
+  brokenToAwakePathVoices:
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BlockedtoAsleep_1
+  - event:/RobotTravail_SD/RobotTravail_{0}/Voix/VoixRobot_BlockedtoAsleep_2
 --- !u!1 &4425033502820723938
 GameObject:
   m_ObjectHideFlags: 0
